@@ -14,5 +14,10 @@
     "ignorePatterns": [
         "**/build/*",
         "**/node_modules/*"
-    ]
+    ],
+    "env": {
+        "browser": true,
+        "chrome": true,
+        "webextensions": true
+    }
 }

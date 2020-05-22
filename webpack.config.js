@@ -1,23 +1,6 @@
 /* eslint-disable */
 const path = require('path');
 
-const ChromeBuildDir = path.resolve(
-  __dirname,
-  'extensions',
-  'master',
-  'chrome',
-  'build'
-);
-const FirefoxBuildDir = path.resolve(
-  __dirname,
-  'extensions',
-  'master',
-  'firefox',
-  'build'
-);
-
-const ApplicationsDir = path.resolve(__dirname, 'applications');
-
 const base_config = {
   mode: 'development',
   entry: path.resolve(__dirname, 'src', 'index.ts'),
@@ -35,23 +18,32 @@ const base_config = {
   }
 };
 
-function get_duckduckgo_results_navigator_config(build_dir) {
+function get_duckduckgo_results_navigator_config() {
+  const ContentScriptPath = path.resolve(
+    __dirname,
+    'extensions/duckduckgo-results-navigator/src/content-script.ts'
+  );
+
+  const ChromeBackground = path.resolve(
+    __dirname,
+    'extensions/duckduckgo-results-navigator/background.chrome.ts'
+  );
+
+  const FirefoxBackground = path.resolve(
+    __dirname,
+    'extensions/duckduckgo-results-navigator/background.firefox.ts'
+  );
+
   return {
     entry: {
-      index: path.resolve(
-        ApplicationsDir,
-        'duckduckgo-results-navigator',
-        'index.ts'
-      ),
-      'content-script': path.resolve(
-        ApplicationsDir,
-        'duckduckgo-results-navigator',
-        'content-script.ts'
-      )
+      'chrome/build/background': ChromeBackground,
+      'firefox/build/background': FirefoxBackground,
+      'chrome/build/content-script': ContentScriptPath,
+      'firefox/build/content-script': ContentScriptPath
     },
     output: {
       filename: '[name].js',
-      path: path.resolve(build_dir, 'duckduckgo-results-navigator')
+      path: path.resolve(__dirname, 'extensions/duckduckgo-results-navigator')
     }
   };
 }
@@ -59,10 +51,10 @@ function get_duckduckgo_results_navigator_config(build_dir) {
 module.exports = [
   {
     ...base_config,
-    ...get_duckduckgo_results_navigator_config(ChromeBuildDir)
+    ...get_duckduckgo_results_navigator_config()
   },
   {
     ...base_config,
-    ...get_duckduckgo_results_navigator_config(FirefoxBuildDir)
+    ...get_duckduckgo_results_navigator_config()
   }
 ];
