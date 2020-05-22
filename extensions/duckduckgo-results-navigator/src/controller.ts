@@ -4,7 +4,7 @@ type ControllerState = {
   focused_res_node: HTMLElement;
 };
 
-class Controller {
+export default class Controller {
   private state: ControllerState;
 
   constructor(initial_res_node: HTMLElement) {
@@ -17,18 +17,18 @@ class Controller {
     }
   }
 
-  update_state(new_state: any) {
+  update_state(new_state: any): void {
     this.state = {
       ...this.state,
       ...new_state
     };
   }
 
-  get_state() {
+  get_state(): ControllerState {
     return this.state;
   }
 
-  render() {
+  render(): void {
     if (this.state.focused_res_node) {
       this.state.focused_res_node.focus();
     } else {
@@ -36,11 +36,3 @@ class Controller {
     }
   }
 }
-
-chrome.commands.onCommand.addListener(function (command) {
-  if (command === 'focus-on-next-res') {
-    console.log('focus-on-next-res happened!');
-  } else if (command === 'focus-on-prev-res') {
-    console.log('focus-on-prev-res happened!');
-  }
-});

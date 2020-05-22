@@ -32,5 +32,26 @@
     "web_accessible_resources": [
         "assets/*"
     ],
+    "commands": {
+        "focus-on-next-res": {
+            "suggested_key": {
+                "default": "Ctrl+J",
+                "windows": "Ctrl+J",
+                "mac": "MacCtrl+J"
+            },
+            "description": "Something goes here!"
+        },
+        "focus-on-prev-res": {
+            "suggested_key": {
+                "default": "Ctrl+K",
+                "windows": "Ctrl+K",
+                "mac": "MacCtrl+K"
+            },
+            "description": "Something goes here!"
+        }
+    },
     "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
 }
+
+
+

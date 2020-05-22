@@ -21,7 +21,7 @@ const base_config = {
 function get_duckduckgo_results_navigator_config() {
   const ContentScriptPath = path.resolve(
     __dirname,
-    'extensions/duckduckgo-results-navigator/src/content-script.ts'
+    'extensions/duckduckgo-results-navigator/content-script.ts'
   );
 
   const ChromeBackground = path.resolve(
