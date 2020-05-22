@@ -7,7 +7,7 @@
         "sourceMap": true
     },
     "include": [
-        "src/**/*"
+        "applications/**/*"
     ],
     "exclude": [
         "node_modules",

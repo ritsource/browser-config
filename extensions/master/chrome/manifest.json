@@ -15,7 +15,7 @@
                 "https://duckduckgo.com/*"
             ],
             "js": [
-                "build/content-script.js"
+                "build/duckduckgo-results-navigator/content-script.js"
             ],
             "css": [],
             "run_at": "document_start",
@@ -24,8 +24,8 @@
     ],
     "background": {
         "scripts": [
-            "index.js",
-            "build/content-script.js"
+            "build/duckduckgo-results-navigator/index.js",
+            "build/duckduckgo-results-navigator/content-script.js"
         ],
         "persistent": false
     },
