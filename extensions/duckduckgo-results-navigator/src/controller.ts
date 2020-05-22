@@ -1,38 +1,91 @@
 import { error } from 'console';
 
-type ControllerState = {
-  focused_res_node: HTMLElement;
-};
+const ResultsSelector = '.result__a';
+
+class ResultElement extends HTMLElement {
+  private focused: boolean;
+
+  constructor() {
+    super();
+    this.focused = false;
+  }
+
+  public is_focused(): boolean {
+    return this.focused;
+  }
+
+  public focus(): void {
+    super.focus();
+    this.focused = true;
+  }
+
+  public unfocus(): void {
+    if (!this.focused) {
+      return;
+    }
+
+    super.blur();
+    this.focused = false;
+  }
+}
+
+function count_of_res_elements(): number {
+  try {
+    return document.querySelectorAll(ResultsSelector).length;
+  } catch {
+    return -1;
+  }
+}
+
+function get_res_element_by_index(index: number): ResultElement {
+  return get_all_res_elements()[index];
+}
+
+function get_all_res_elements(): NodeListOf<ResultElement> {
+  return document.querySelectorAll(ResultsSelector);
+}
 
 export default class Controller {
-  private state: ControllerState;
+  private focused_res_index: number;
 
-  constructor(initial_res_node: HTMLElement) {
-    this.state = {
-      focused_res_node: null
-    };
+  constructor() {
+    this.focused_res_index = 0;
+  }
 
-    if (initial_res_node) {
-      this.update_state({ focused_res_node: initial_res_node });
+  private render(): void {
+    get_all_res_elements().forEach((elem) => {
+      elem.unfocus();
+    });
+
+    const res_elem = get_res_element_by_index(this.focused_res_index);
+    res_elem.focus();
+  }
+
+  public focus_on_next_res(): void {
+    const num_res = count_of_res_elements();
+    if (num_res === -1) {
+      throw error('No results found');
     }
-  }
 
-  update_state(new_state: any): void {
-    this.state = {
-      ...this.state,
-      ...new_state
-    };
-  }
-
-  get_state(): ControllerState {
-    return this.state;
-  }
-
-  render(): void {
-    if (this.state.focused_res_node) {
-      this.state.focused_res_node.focus();
+    if (this.focused_res_index === num_res) {
+      this.focused_res_index = 0;
     } else {
-      throw error('No focused result found');
+      this.focused_res_index++;
     }
+    this.render();
+  }
+
+  public focus_on_prev_res(): void {
+    const num_res = count_of_res_elements();
+    if (num_res === -1) {
+      throw error('No results found');
+    }
+
+    if (this.focused_res_index === 0) {
+      this.focused_res_index = num_res;
+    } else {
+      this.focused_res_index--;
+    }
+    this.render();
   }
 }

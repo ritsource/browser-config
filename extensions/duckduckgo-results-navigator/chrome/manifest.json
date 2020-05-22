@@ -17,7 +17,9 @@
             "js": [
                 "build/content-script.js"
             ],
-            "css": [],
+            "css": [
+                "build/bundle.css"
+            ],
             "run_at": "document_start",
             "all_frames": true
         }

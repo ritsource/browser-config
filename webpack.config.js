@@ -1,5 +1,6 @@
 /* eslint-disable */
 const path = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const base_config = {
   mode: 'development',
@@ -48,6 +49,34 @@ function get_duckduckgo_results_navigator_config() {
   };
 }
 
+function get_duckduckgo_results_navigator_css_config() {
+  const SCSSEntryPath = path.resolve(
+    __dirname,
+    'extensions/duckduckgo-results-navigator/css/index.scss'
+  );
+
+  return {
+    entry: {
+      'chrome/build/bundle': SCSSEntryPath,
+      'firefox/build/bundle': SCSSEntryPath
+    },
+    output: {
+      filename: '[name].css',
+      path: path.resolve(__dirname, 'extensions/duckduckgo-results-navigator')
+    },
+    plugins: [new MiniCssExtractPlugin()],
+    // plugins: [new MiniCssExtractPlugin({ filename: 'bundle.css' })],
+    module: {
+      rules: [
+        {
+          test: /\.s?css$/,
+          use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
+        }
+      ]
+    }
+  };
+}
+
 module.exports = [
   {
     ...base_config,
@@ -55,6 +84,6 @@ module.exports = [
   },
   {
     ...base_config,
-    ...get_duckduckgo_results_navigator_config()
+    ...get_duckduckgo_results_navigator_css_config()
   }
 ];
