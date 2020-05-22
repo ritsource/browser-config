@@ -1,0 +1,36 @@
+{
+    "manifest_version": 2,
+    "name": "DuckDuckGo Results Navigator",
+    "version": "1.0.0",
+    "description": "",
+    "permissions": [
+        "tabs",
+        "activeTab",
+        "storage"
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "http://duckduckgo.com/*",
+                "https://duckduckgo.com/*"
+            ],
+            "js": [
+                "build/content-script.js"
+            ],
+            "css": [],
+            "run_at": "document_start",
+            "all_frames": true
+        }
+    ],
+    "background": {
+        "scripts": [
+            "index.js",
+            "build/content-script.js"
+        ],
+        "persistent": false
+    },
+    "web_accessible_resources": [
+        "assets/*"
+    ],
+    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+}
